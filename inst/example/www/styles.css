@@ -1,0 +1,32 @@
+body{
+  font-size: 165%;
+  text-align: center;
+}
+
+.tab-content{
+  width: 80%;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.modal-dialog {
+  width: 700px;
+  text-align: left;
+}
+
+h1{
+  font-size: 225%;
+}
+
+h2{
+  font-size: 175%;
+}
+
+blockquote {
+  font-weight: none;
+  font-size: 100%;
+  border: 2px solid #ccc;
+  border-left: 10px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+}
