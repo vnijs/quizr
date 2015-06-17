@@ -1,5 +1,5 @@
 ## loading / installing dependencies as needed
-dep <- c("shiny", "ggplot2", "rmarkdown", "dplyr", "knitr", "tidyr", "grid", "shinythemes", "pryr")
+dep <- c("shiny", "ggplot2", "dplyr", "knitr", "tidyr", "grid", "shinythemes", "pryr")
 
 for (d in dep) {
   if (!require(d, character.only = TRUE)) {
