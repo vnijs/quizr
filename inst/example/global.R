@@ -1,5 +1,5 @@
 ## loading / installing dependencies as needed
-dep <- c("shiny", "ggplot2", "dplyr", "knitr", "tidyr", "grid", "shinythemes", "pryr")
+dep <- c("shiny", "ggplot2", "dplyr", "knitr")
 
 for (d in dep) {
   if (!require(d, character.only = TRUE)) {
@@ -24,7 +24,6 @@ dataTableOutput <- DT::dataTableOutput
 datatable       <- DT::datatable
 
 ## path to images and js
-addResourcePath("images", "www/images/")
 addResourcePath("js", "www/js/")
 
 ## options for knitting/rendering rmarkdown chunks
@@ -49,19 +48,19 @@ bs_modal <- function(modal_title, link, file) {
 ## function to render .md files to html
 inclMD <- function(path) {
   markdown::markdownToHTML(path, fragment.only = TRUE, options = c(""),
-                           stylesheet="../www/empty.css")
+                           stylesheet = "")
 }
 
 ## function to render .Rmd files to html - does not embed image or add css
-inclRmd <- function(path, r_env) {
+inclRmd <- function(path, r_env = parent.frame()) {
   paste(readLines(path, warn = FALSE), collapse = '\n') %>%
   knitr::knit2html(text = ., fragment.only = TRUE, quiet = TRUE, envir = r_env,
-                   options = "", stylesheet = "../www/empty.css") %>%
+                   options = "", stylesheet = "") %>%
     gsub("&lt;!--/html_preserve--&gt;","",.) %>%  ## knitr adds this
     gsub("&lt;!--html_preserve--&gt;","",.) %>%   ## knitr adds this
     HTML %>%
     withMathJax
 }
 
-## check if a button WAS pressed
+## check if an input is null or empty
 is_empty <- function(x, empty = "") if (is.null(x) || x == empty) TRUE else FALSE

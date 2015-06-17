@@ -24,5 +24,5 @@ output$mc1_profit <- renderUI({
 })
 
 output$mini_case_1 <- renderUI({
-  inclRmd("./cases/case1/mini_case_1.Rmd", r_env)
+  inclRmd("./cases/case1/mini_case_1.Rmd")
 })

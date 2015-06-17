@@ -10,18 +10,20 @@ make_quiz("1.01", "At 2 what price would Icekimo sell 75 cups?",
           "$2.50", "At a price of $2.50 demand would be 100 - 10 x 2.50 = 75",
           "In the equation above replace the 0 by 75 and solve for p")
 
+## add 'quiz_' before the quiz number to show the quiz element
 uiOutput("quiz_1.01")
 ```
 
 # Profit function
 
-```{r result = 'as.is'}
+```{r}
+## interactive widget (slider and ggplot)
 uiOutput("mc1_profit")
 ```
 
 # More quiz questions
 
-```{r result = 'as.is'}
+```{r}
 make_quiz("1.02", "If Iceskimo sold 80 units at a price of $10, what must the price sensitivity have been in the Kearny Mesa market?",
           c("-1","-2","-3","-4","-5"),
           "-2",
@@ -38,17 +40,17 @@ uiOutput("quiz_1.02")
 
 For more on derivatives, please watch the following videos:
 
-```{r result = 'as.is'}
+```{r}
 bs_modal('Derivatives','derivative', inclMD("./cases/modals/derivatives.md"))
 ```
 </div>
 
-```{r result = 'as.is'}
+```{r}
 make_quiz("1.03", "What are the profits generated at a price of $5.50?",
           paste0("$",c("150.00","152.50","155.00","157.50","160.00")),
           "$157.50",
-          "Replace the price \\(p\\) with 5.5 in the profit function and we can obtain (100 - 10 x 5.5) x (5.5 - 2) = 157.5",
-          "Replace the price \\(p\\) with 5.5 in the profit function")
+          "Replace the price p with 5.5 in the profit function to obtain (100 - 10 x 5.5) x (5.5 - 2) = 157.5",
+          "Replace the price p with 5.5 in the profit function")
 
 uiOutput("quiz_1.03")
 ```
