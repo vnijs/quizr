@@ -41,8 +41,4 @@ r_sessions <- new.env(parent = emptyenv())
 "~/r_sessions/" %>% {if (!file.exists(.)) dir.create(., recursive = TRUE)}
 
 ## case names
-cases <- list("1" = "1. Demand and Cost",
-              "2" = "2. Investment",
-              "3" = "3. Consumer Consumption",
-              "4" = "4. Service Operations",
-              "5" = "5. Data Analytics")
+cases <- list("1" = "1. Demand and Cost")

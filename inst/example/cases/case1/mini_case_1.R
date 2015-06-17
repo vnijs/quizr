@@ -1,15 +1,3 @@
-output$mc1_demand <- renderPlot({
-  Price <- 0:15
-  Sales <- (100 + input$price_coeff * Price)
-  dat1 <- data.frame(Price = Price, Sales = Sales, location = "Kearny Mesa: Adjustable")
-  Sales <- 100 - 10 * Price
-  dat2 <- data.frame(Price = Price, Sales = Sales, location = "Kearny Mesa: Original")
-  dat <- rbind(dat1, dat2)
-  ggplot(dat, aes(x = Price, y = Sales, group = location, colour = location)) +
-    geom_line() +
-    coord_fixed(ratio = 0.06, xlim = c(0, 15), ylim = c(-20, 120))
-})
-
 output$mc1_profit <- renderPlot({
   Price <- seq(0,12,.1)
   b <- 10
@@ -29,13 +17,11 @@ output$mc1_profit <- renderPlot({
     annotate("text", x = 6, y = 10, label = paste0("Profit: $", prof))
 })
 
-## after 01_introduction
 make_quiz("1.01", "At what price would Icekimo sell 75 cups?",
           paste0("$",c("2.00","2.50","3.00","3.50","4.00")),
           "$2.50", "At a price of $2.50 demand would be 100 - 10 x 2.50 = 75",
           "In the equation above replace the 0 by 75 and solve for p")
 
-## after interactive price sensitivity widget
 make_quiz("1.02", "If Iceskimo sold 80 units at a price of $10, what must the price sensitivity have been in the Kearny Mesa market?",
           c("-1","-2","-3","-4","-5"),
           "-2",
@@ -48,7 +34,6 @@ make_quiz("1.03", "At what price would Iceskimo sell nothing if the price sensit
           "With a price sensitivity of -8 and a price of 12.5, the demand would be 100 - 8 x 12.5 = 0",
           "In the equation above calculate s(p) by plugging in the price sensitivity and price")
 
-## after 03_profit
 make_quiz("1.04", "At what price are profits maximized?",
           paste0("$",c("4.00","5.00","6.00","7.00","8.00")),
           "$6.00",
