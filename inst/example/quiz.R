@@ -4,27 +4,23 @@ quiz_question <- function(question = "", q_nr = 1) {
 }
 
 quiz_mc <- function(answers = "", q_nr, inline = TRUE) {
-  output[[paste0("ui_quiz_mc",q_nr)]] <- renderUI({
-    input_name <- paste0("quiz_mc",q_nr)
-    ## use current value rather than state if available
-    sel <- if (is_empty(input[[input_name]])) state_init(input_name) else input[[input_name]]
-    radioButtons(input_name, NULL, answers, selected = sel,
-                 inline = inline) %>% withMathJax
-  })
+  nm <- paste0("quiz_mc",q_nr)
+  radioButtons(nm, NULL, answers, selected = state_init(nm),
+               inline = inline) %>% withMathJax
 }
 
 quiz_buttons <- function(q_nr) {
   tagList(
     with(tags,
-      table(
-        td(button(id = paste0("quiz_submit",q_nr), type = "button",
-                  class = "btn btn-info action-button shiny-bound-input",
-                  "Submit")),
-        td(HTML("&nbsp;&nbsp;")),
-        td(button(id = paste0("quiz_hint",q_nr), type = "button",
-                  class = "btn btn-primary action-button shiny-bound-input",
-                  "Hint"))
-      )
+         table(
+           td(button(id = paste0("quiz_submit",q_nr), type = "button",
+                     class = "btn btn-info action-button shiny-bound-input",
+                     "Submit")),
+           td(HTML("&nbsp;&nbsp;")),
+           td(button(id = paste0("quiz_hint",q_nr), type = "button",
+                     class = "btn btn-primary action-button shiny-bound-input",
+                     "Hint"))
+         )
     )
   )
 }
@@ -50,19 +46,14 @@ quiz_out <- function(q_nr, color, feedback, correct, answer) {
 quiz_observe <- function(q_nr, correct, answer, hint) {
   r_quiz[[paste0("quiz_",q_nr)]] <- ""
 
-  observe({
-    input[[paste0("quiz_mc",q_nr)]]
-    isolate({
-      r_quiz[[paste0("quiz_",q_nr)]] <- ""
-    })
-  })
-
   observeEvent(input[[paste0("quiz_hint",q_nr)]], {
     isolate({
-      r_quiz[[paste0("quiz_",q_nr)]]  <- paste0("<br />Hint: ", hint)
+      r_quiz[[paste0("quiz_",q_nr)]] <- paste0("<br />Hint: ", hint)
       if(is_empty(r_answers[[paste0("quiz_",q_nr)]]))
         r_hints[[paste0("quiz_",q_nr)]] <- "used"
 
+      if(!is_empty(input[[paste0("quiz_mc",q_nr)]]))
+        r_state[paste0("quiz_mc",q_nr)] <<- input[[paste0("quiz_mc",q_nr)]]
     })
   })
 
@@ -70,33 +61,37 @@ quiz_observe <- function(q_nr, correct, answer, hint) {
     isolate({
       r_quiz[[paste0("quiz_",q_nr)]]  <-
       { if (is_empty(input[[paste0("quiz_mc",q_nr)]])) {
-          "<br />Choose an option and press Submit"
-        } else if (input[[paste0("quiz_mc",q_nr)]] == correct) {
-          quiz_out(q_nr, "green", "correct", correct, answer)
-        } else {
-          quiz_out(q_nr, "red", "incorrect", correct, answer)
-        }
+        "<br />Choose an option and press Submit"
+      } else if (input[[paste0("quiz_mc",q_nr)]] == correct) {
+        quiz_out(q_nr, "green", "correct", correct, answer)
+      } else {
+        quiz_out(q_nr, "red", "incorrect", correct, answer)
       }
+      }
+
+      if(!is_empty(input[[paste0("quiz_mc",q_nr)]]))
+        r_state[paste0("quiz_mc",q_nr)] <<- input[[paste0("quiz_mc",q_nr)]]
     })
   })
+
   return(invisible())
 }
 
 make_quiz <- function(q_nr, question, mc, correct, answer, hint, inline = TRUE) {
   quiz_observe(q_nr, correct, answer, hint)
-  quiz_mc(mc, q_nr, inline = inline)
 
   output[[paste0("quiz_",q_nr)]] <- renderUI({
     tagList(
-      HTML("<div style='background-color:rgba(178, 204, 255, .1); padding:20px 20px; margin-top:10px; width:100%; border:1px solid black'>"),
-      quiz_question(question, q_nr),
-      uiOutput(paste0("ui_quiz_mc",q_nr)),
-      quiz_buttons(q_nr),
-      HTML(r_quiz[[paste0("quiz_",q_nr)]]) %>% withMathJax,
-      HTML("</div>"),
-      tags$br()
+      div(class = "quiz",
+          quiz_question(question, q_nr),
+          quiz_mc(mc, q_nr, inline = inline),
+          quiz_buttons(q_nr),
+          r_quiz[[paste0("quiz_",q_nr)]] %>% HTML %>% withMathJax
+      )
     )
   })
+
+  return(invisible())
 }
 
 answer_table <- reactive({
@@ -105,10 +100,14 @@ answer_table <- reactive({
   tab <- data.frame(tab, stringsAsFactors = FALSE) %>% t %>%
     data.frame(stringsAsFactors = FALSE)
   colnames(tab) <- c("Case", "Question", "Selected", "Hint", "Score", "Max")
-  tab$Case <- as.factor(tab$Case)
-  tab$Hint <- as.factor(tab$Hint)
+  tab$Case  <- as.factor(tab$Case)
+  tab$Hint  <- as.factor(tab$Hint)
   tab$Score <- as.integer(tab$Score)
-  tab$Max <- as.integer(tab$Max)
+  tab$Max   <- as.integer(tab$Max)
+  tab$Selected <-
+    sub("\\(","",tab$Selected) %>%
+    sub("\\)","",.) %>%
+    gsub("\\\\","",.)
   tab
 })
 
@@ -129,14 +128,14 @@ output$your_answers <- renderDataTable({
   if (is.null(tab)) return()
 
   datatable(tab, filter = list(position = "top", clear = FALSE, plain = TRUE),
-    rownames = FALSE, style = "bootstrap", escape = TRUE,
-    options = list(
-      search = list(regex = TRUE),
-      autoWidth = TRUE,
-      columnDefs = list(list(className = 'dt-center', targets = "_all")),
-      processing = FALSE,
-      pageLength = 10,
-      lengthMenu = list(c(10, 25, 50, -1), c("10", "25", "50", "All"))
-    )
+            rownames = FALSE, style = "bootstrap", escape = FALSE,
+            options = list(
+              search = list(regex = TRUE),
+              autoWidth = TRUE,
+              columnDefs = list(list(className = 'dt-center', targets = "_all")),
+              processing = FALSE,
+              pageLength = 10,
+              lengthMenu = list(c(10, 25, 50, -1), c("10", "25", "50", "All"))
+            )
   )
 })
