@@ -3,7 +3,7 @@ shinyUI(
              inverse = TRUE, collapsible = TRUE,
 
     tabPanel("Introduction",
-             tags$head(tags$script(src = "js/mathJax_eq.js", type = "text/x-mathjax-config")),
+             tags$head(HTML("<script type='text/x-mathjax-config'>MathJax.Hub.Config({ TeX: { equationNumbers: {autoNumber: 'all'} } });</script>")),
              withMathJax(),
              includeMarkdown("./cases/introduction.md")),
 
