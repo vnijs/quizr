@@ -17,6 +17,7 @@ shinyUI(
 
     tags$head(
       tags$script(src = "js/session.js"),
+      tags$script(src = "js/modal_vid.js"),
       tags$link(rel = "stylesheet", type = "text/css", href = "styles.css")
     )
   )

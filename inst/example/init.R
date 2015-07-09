@@ -11,7 +11,7 @@ isolate({
 
 ## set the session id
 if (is.null(prevSSUID)) {
-  r_ssuid <- shiny:::createUniqueId(16)
+  r_ssuid <- shiny:::createUniqueId(6)
 } else {
   r_ssuid <- prevSSUID
 }

@@ -30,3 +30,19 @@ blockquote {
   margin: 1.5em 10px;
   padding: 0.5em 10px;
 }
+
+div.resources {
+  background-color:rgb(247, 251, 242);
+  padding:20px 20px;
+  margin-top:10px;
+  margin-bottom:10px;
+  border:1px solid black;
+}
+
+div.quiz {
+  background-color:rgb(247, 249, 254);
+  padding:20px 20px;
+  margin-top:10px;
+  margin-bottom:10px;
+  border:1px solid black;
+}

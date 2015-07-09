@@ -9,7 +9,7 @@ $$
   \label{eq:sample}
 $$
 
-```{r result = 'as.is'}
+```{r}
 make_quiz("1.01", "At what price would Iceskimo sell 75 cups?",
           paste0("$",c("2.00","2.50","3.00","3.50","4.00")),
           "$2.50", "At a price of $2.50 demand would be \\(100 - 10 \\times 2.50 = 75\\)",
@@ -20,6 +20,8 @@ uiOutput("quiz_1.01")
 ```
 
 # Profit function
+
+See equation \ref{eq:sample} above.
 
 ```{r}
 ## interactive widget (slider and ggplot)
@@ -41,13 +43,8 @@ uiOutput("quiz_1.02")
 
 ...
 
-<div style='background-color:rgba(150, 70, 255, .1); padding:20px 20px; margin-top:10px; width:100%; border:1px solid black'>
-
-For more on derivatives, please watch the following videos:
-
-```{r}
-bs_modal('Derivatives','derivative', inclMD("./cases/modals/derivatives.md"))
-```
+<div class="resources">
+For more on derivatives please watch the following `r bs_modal('Derivatives','derivative', inclMD("./cases/modals/derivatives.md"))`
 </div>
 
 ```{r}
