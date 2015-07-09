@@ -1,3 +1,4 @@
+// function written by Joe Cheng (see github/shiny-resume)
 Shiny.addCustomMessageHandler("session_start", function(data) {
   var search = location.search;
 

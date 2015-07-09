@@ -9,6 +9,8 @@ shinyServer(function(input, output, session) {
   ## get content for each case
   source("./cases/case1/mini_case_1.R", local = TRUE)
 
+  updateTabsetPanel(session, "nav_bootcamp", selected = cases[[1]])
+
   ## save state on refresh or browser close
   saveStateOnRefresh(session)
 })

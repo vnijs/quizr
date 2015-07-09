@@ -2,7 +2,10 @@ shinyUI(
   navbarPage("Bootcamp", windowTitle = "Rady", id = "nav_bootcamp",
              inverse = TRUE, collapsible = TRUE,
 
-    tabPanel("Introduction", withMathJax(), includeMarkdown("./cases/introduction.md")),
+    tabPanel("Introduction",
+             tags$head(tags$script(src = "js/mathJax_eq.js", type = "text/x-mathjax-config")),
+             withMathJax(),
+             includeMarkdown("./cases/introduction.md")),
 
     ## case list defined in global.R
     navbarMenu("Cases",

@@ -4,10 +4,15 @@
 
 ...
 
+$$ 
+  y = \alpha + \beta x + \epsilon 
+  \label{eq:sample}
+$$
+
 ```{r result = 'as.is'}
-make_quiz("1.01", "At 2 what price would Icekimo sell 75 cups?",
+make_quiz("1.01", "At what price would Iceskimo sell 75 cups?",
           paste0("$",c("2.00","2.50","3.00","3.50","4.00")),
-          "$2.50", "At a price of $2.50 demand would be 100 - 10 x 2.50 = 75",
+          "$2.50", "At a price of $2.50 demand would be \\(100 - 10 \\times 2.50 = 75\\)",
           "In the equation above replace the 0 by 75 and solve for p")
 
 ## add 'quiz_' before the quiz number to show the quiz element
@@ -27,8 +32,8 @@ uiOutput("mc1_profit")
 make_quiz("1.02", "If Iceskimo sold 80 units at a price of $10, what must the price sensitivity have been in the Kearny Mesa market?",
           c("-1","-2","-3","-4","-5"),
           "-2",
-          "With a price sensitivity of -2, the demand would be 100 - 2 x 10 = 80",
-          "In the equation above replace s(p) by 80 and p by 10 and solve for *a* in 80 = 100 - a x 10")
+          "With a price sensitivity of -2, the demand would be \\(100 - 2 \\times 10 = 80\\)",
+          "In the equation above replace \\(s(p)\\) by 80 and p by 10 and solve for \\(a\\) in \\(80 = 100 + a \\times 10\\)")
 uiOutput("quiz_1.02")
 ```
 
@@ -49,7 +54,7 @@ bs_modal('Derivatives','derivative', inclMD("./cases/modals/derivatives.md"))
 make_quiz("1.03", "What are the profits generated at a price of $5.50?",
           paste0("$",c("150.00","152.50","155.00","157.50","160.00")),
           "$157.50",
-          "Replace the price p with 5.5 in the profit function to obtain (100 - 10 x 5.5) x (5.5 - 2) = 157.5",
+          "Replace the price p with 5.5 in the profit function to obtain \\((100 - 10 \\times 5.5) \\times (5.5 - 2) = 157.5\\)",
           "Replace the price p with 5.5 in the profit function")
 
 uiOutput("quiz_1.03")
