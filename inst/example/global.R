@@ -1,22 +1,24 @@
 ## loading / installing dependencies as needed
-dep <- c("shiny", "ggplot2", "dplyr", "knitr")
+# dep <- c("shiny", "ggplot2", "dplyr", "knitr")
+#
+# for (d in dep) {
+#   if (!require(d, character.only = TRUE)) {
+#     install.packages(d, repos = "http://cran.rstudio.com/")
+#     library(d, character.only = TRUE)
+#   }
+# }
 
-for (d in dep) {
-  if (!require(d, character.only = TRUE)) {
-    install.packages(d, repos = "http://cran.rstudio.com/")
-    library(d, character.only = TRUE)
-  }
-}
-
-## using local mathjax if available
-if ("MathJaxR" %in% installed.packages()[,"Package"]) {
-  addResourcePath("MathJax", file.path(system.file(package = "MathJaxR"), "MathJax/"))
-  withMathJax <- MathJaxR::withMathJaxR
-}
 
 ## installing DT if not yet available
-if (!"DT" %in% installed.packages()[,"Package"])
-	install.packages("DT", repos = "http://vnijs.github.io/radiant_miniCRAN/")
+# if (!"DT" %in% installed.packages()[,"Package"])
+	# install.packages("DT", repos = "http://vnijs.github.io/radiant_miniCRAN/")
+
+library(shiny)
+library(ggplot2)
+library(dplyr)
+library(knitr)
+library(DT)
+
 
 ## using DT rather than Shiny versions of datatable
 renderDataTable <- DT::renderDataTable
