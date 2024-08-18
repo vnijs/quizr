@@ -9,10 +9,6 @@
 # }
 
 
-## installing DT if not yet available
-# if (!"DT" %in% installed.packages()[,"Package"])
-	# install.packages("DT", repos = "http://vnijs.github.io/radiant_miniCRAN/")
-
 library(shiny)
 library(ggplot2)
 library(dplyr)
@@ -56,8 +52,10 @@ inclMD <- function(path) {
 ## function to render .Rmd files to html - does not embed image or add css
 inclRmd <- function(path, r_env = parent.frame()) {
   paste(readLines(path, warn = FALSE), collapse = '\n') %>%
-  knitr::knit2html(text = ., fragment.only = TRUE, quiet = TRUE, envir = r_env,
-                   options = "", stylesheet = "") %>%
+  knitr::knit2html(
+    text = ., template = FALSE, quiet = TRUE,
+    envir = r_env, meta = list(css = ""), output = FALSE
+  ) %>%
     gsub("&lt;!--/html_preserve--&gt;","",.) %>%  ## knitr adds this
     gsub("&lt;!--html_preserve--&gt;","",.) %>%   ## knitr adds this
     HTML %>%
