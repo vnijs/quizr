@@ -14,12 +14,10 @@ quiz_buttons <- function(q_nr) {
     with(tags,
          table(
            td(button(id = paste0("quiz_submit",q_nr), type = "button",
-                     class = "btn btn-info action-button shiny-bound-input",
-                     "Submit")),
+                     class = "btn btn-info action-button", "Submit")),
            td(HTML("&nbsp;&nbsp;")),
            td(button(id = paste0("quiz_hint",q_nr), type = "button",
-                     class = "btn btn-primary action-button shiny-bound-input",
-                     "Hint"))
+                     class = "btn btn-primary action-button", "Hint"))
          )
     )
   )
